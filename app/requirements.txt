@@ -6,3 +6,4 @@ jinja2
 scikit-learn
 numpy
 joblib
+python-multipart
