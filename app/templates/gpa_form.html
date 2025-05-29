@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GPA Predictor</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('{{ url_for("static", path="img/aa.jpg") }}') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container, #resultSection {
+      background: #000000;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(236, 125, 219, 0.8);
+      max-width: 400px;
+      width: 90%;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ec7ddb;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #ec7ddb;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #7c3aed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #resultSection p {
+      text-align: center;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    #resultSection b {
+      color: #8b5cf6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Predict Your GPA</h1>
+    <form id="gpaForm">
+      <div class="form-group">
+        <label>Study Hours Per Day:</label>
+        <input type="number" name="Study_Hours_Per_Day" min="0" max="20" step="0.1" required />
+      </div>
+      <div class="form-group">
+        <label>Extracurricular Hours Per Day:</label>
+        <input type="number" name="Extracurricular_Hours_Per_Day" min="0" max="20" step="0.1" required />
+      </div>
+      <div class="form-group">
+        <label>Sleep Hours Per Day:</label>
+        <input type="number" name="Sleep_Hours_Per_Day" min="0" max="20" step="0.1" required />
+      </div>
+      <div class="form-group">
+        <label>Social Hours Per Day:</label>
+        <input type="number" name="Social_Hours_Per_Day" min="0" max="20" step="0.1" required />
+      </div>
+      <div class="form-group">
+        <label>Physical Activity Hours Per Day:</label>
+        <input type="number" name="Physical_Activity_Hours_Per_Day" min="0" max="20" step="0.1" required />
+      </div>
+      <input type="hidden" name="Stress_Level" value="Low" />
+      <button type="button" id="predictButton">Predict GPA</button>
+    </form>
+  </div>
+
+  <div id="resultSection" class="hidden">
+    <h1>Your Predicted GPA</h1>
+    <p>The predicted GPA is: <b id="gpaValue"></b></p>
+    <p>GPA Classification: <b id="gpaClass"></b></p>
+    <button id="resetButton">Predict Again</button>
+  </div>
+
+  <script>
+    document.getElementById('predictButton').addEventListener('click', async () => {
+      const form = document.getElementById('gpaForm');
+      const formData = new FormData(form);
+      try {
+        const response = await fetch('/gpa/predict', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        document.getElementById('gpaValue').textContent = data.gpa;
+        document.getElementById('gpaClass').textContent = data.gpa_class;
+        document.getElementById('resultSection').classList.remove('hidden');
+        form.classList.add('hidden');
+      } catch (error) {
+        console.error("Error during prediction:", error);
+      }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      document.getElementById('gpaForm').classList.remove('hidden');
+      document.getElementById('resultSection').classList.add('hidden');
+      document.getElementById('gpaForm').reset();
+    });
+  </script>
+</body>
+</html>

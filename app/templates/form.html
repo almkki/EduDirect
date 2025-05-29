@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>توقع التخصص المناسب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #111;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 20px 10px 20px; /* قللنا البادينج من الأسفل */
+            direction: rtl;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background: #222;
+            padding: 35px 35px 25px 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(102,166,255,0.3);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            margin-bottom: 0; /* حذف المساحة تحت */
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            color: #66a6ff;
+            font-weight: 700;
+            font-size: 26px;
+        }
+
+        p.description {
+            margin-bottom: 25px;
+            color: #aaa;
+            font-size: 17px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            background-color: #2a2a2a;
+            color: #eee;
+        }
+
+        .checkbox-group {
+            text-align: right;
+            max-height: 220px;
+            overflow-y: auto;
+            margin-bottom: 25px;
+            padding-right: 12px;
+        }
+
+        .checkbox-item {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            margin-left: 14px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        button, .toggle-btn {
+            background: #66a6ff;
+            color: white;
+            border: none;
+            padding: 14px 0;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 19px;
+            width: 100%;
+            max-width: 380px;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        button:hover, .toggle-btn:hover {
+            background: #5595e6;
+        }
+
+        .button-row {
+            margin-top: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 30px 25px 20px 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p.description {
+                font-size: 15px;
+            }
+
+            .checkbox-group {
+                max-height: 180px;
+                margin-bottom: 20px;
+            }
+
+            .checkbox-item {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .checkbox-item input {
+                width: 16px;
+                height: 16px;
+                margin-left: 12px;
+            }
+
+            button, .toggle-btn {
+                max-width: 100%;
+                font-size: 17px;
+                padding: 13px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>اختر مهاراتك</h1>
+    <p class="description">حدد المهارات التي تتقنها، يمكنك استخدام البحث لتسهيل الاختيار:</p>
+
+    <div class="search-box">
+        <input type="text" id="skill-search" placeholder="ابحث عن مهارة...">
+    </div>
+
+    <form method="post" action="/skills/predict">
+        <div class="checkbox-group" id="skills-container">
+            {% for skill in skills %}
+                <div class="checkbox-item">
+                    <label>
+                        <input type="checkbox" name="selected_skills" value="{{ skill }}" class="skill-checkbox">
+                        {{ skill }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">انصحني بتخصص</button>
+
+        <div class="button-row">
+            <button type="button" class="toggle-btn" onclick="unselectAll()">إلغاء التحديد</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function unselectAll() {
+        document.querySelectorAll('.skill-checkbox').forEach(cb => cb.checked = false);
+    }
+
+    document.getElementById("skill-search").addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        const items = document.querySelectorAll(".checkbox-item");
+
+        items.forEach(item => {
+            const label = item.textContent.toLowerCase();
+            item.style.display = label.includes(searchTerm) ? "" : "none";
+        });
+    });
+</script>
+</body>
+</html>
