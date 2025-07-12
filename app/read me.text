@@ -1,0 +1,10 @@
+1-move requirements.txt file to desktop
+
+2-open cmd and run this command 'pip install -r requirements.txt'
+
+3-run server.py
+
+4-visit http://127.0.0.1:8000/
+
+
+you wont need to do the fisrt two steps anymore
