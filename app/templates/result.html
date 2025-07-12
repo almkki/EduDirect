@@ -1,129 +1,233 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>نتيجة التوصية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Recommendation | EduDirect</title>
+    <meta name="description" content="Your personalized career recommendation based on your selected skills from EduDirect's AI-powered analysis.">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6c63ff',
+                        'primary-dark': '#564fd8',
+                        accent: '#ff6584'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+    
     <style>
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(255, 101, 132, 0.1) 100%),
+                        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: white;
         }
-
+        
         .result-container {
-            background: #1e1e1e;
-            padding: 35px 40px;
-            border-radius: 18px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-            width: 90%;
-            max-width: 520px;
-            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        h1 {
-            color: #66a6ff;
-            margin-bottom: 25px;
-            font-size: 24px;
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
         }
-
-        .recommendation {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 12px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #90caf9;
-            margin-bottom: 20px;
-        }
-
-        .skills-list {
-            text-align: right;
-            direction: rtl;
-        }
-
-        .skills-list h3 {
-            color: #aaa;
-            font-size: 17px;
-            margin-bottom: 10px;
-        }
-
-        .skills-list ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .skills-list li {
-            background: #2d3e50;
-            padding: 8px 12px;
-            margin: 6px 0;
-            border-radius: 6px;
-            color: #bbdefb;
-            font-size: 14px;
-        }
-
-        .button-back {
-            margin-top: 25px;
-            text-align: center;
-        }
-
-        .back-button {
-            display: inline-block;
-            background: #66a6ff;
+        
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 15px;
-            transition: background 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-align: center;
+            transition: transform 0.2s ease;
         }
-
-        .back-button:hover {
-            background: #5a94e2;
-        }
-
-        @media (max-width: 480px) {
-            .result-container {
-                padding: 25px 20px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .recommendation {
-                font-size: 18px;
-            }
+        
+        .skill-tag:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
-<body>
 
-<div class="result-container">
-    <h1>التوصية المهنية الخاصة بك</h1>
-    
-    <div class="recommendation">
-        {{ prediction }}
+<body class="antialiased font-poppins">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-md z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-gray-800">Edu<span class="text-primary">Direct</span></span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-primary transition">Home</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-primary transition">About</a>
+                    <a href="services.html" class="nav-link text-gray-700 hover:text-primary transition">Services</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-primary transition">Contact</a>
+                </div>
+                
+                <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20 min-h-screen flex items-center justify-center px-4">
+        <div class="result-container bg-white bg-opacity-95 rounded-xl shadow-lg p-8 w-full max-w-2xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trophy text-white text-3xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Your Career Recommendation</h1>
+                <p class="text-gray-600">
+                    Based on your selected skills, here's our AI-powered career advice
+                </p>
+            </div>
+
+            <!-- Career Recommendation -->
+            <div class="bg-gradient-to-r from-primary to-primary-dark rounded-lg p-6 mb-8 text-center">
+                <h2 class="text-white text-xl font-semibold mb-2">Recommended Career Path</h2>
+                <div class="text-white text-2xl font-bold">
+                    {{ prediction }}
+                    <!-- Sample text for demo: -->
+                    <!-- Software Development -->
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-check-circle text-primary mr-2"></i>
+                    Your Selected Skills
+                </h3>
+                
+                <div class="skills-grid ">
+                    <!-- Template loop for skills -->
+                     {% for skill in selected_skills %}
+                        <div class="skill-tag font-semibold text-gray-800">{{ skill }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                    href="/skills" 
+                    class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center justify-center"
+                >
+                    <i class="fas fa-redo mr-2"></i>
+                    Try Different Skills
+                </a>
+                
+                <a 
+                    href="http://127.0.0.1:8000/services" 
+                    class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center justify-center"
+                >
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Services
+                </a>
+            </div>
+    </main>
+    <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <!-- Company Info -->
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
+          <p class="text-gray-400 mb-4">
+            AI-powered academic guidance to help students find their perfect path.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#home" class="text-gray-400 hover:text-white transition smooth-scroll">Home</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-white transition smooth-scroll">About</a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-white transition smooth-scroll">Services</a></li>
+          </ul>
+        </div>
+        
+        <!-- Services -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li><a href="/signinup?next=/recommend" class="text-gray-400 hover:text-white transition">Major Recommendation</a></li>
+            <li><a href="/signinup?next=/gpa" class="text-gray-400 hover:text-white transition">GPA Prediction</a></li>
+            <li><a href="/signinup?next=/skills" class="text-gray-400 hover:text-white transition">Career Advice</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="border-t border-gray-800 pt-8 text-center">
+        <p class="text-gray-400">
+          © 2024 EduDirect. All rights reserved. Built with ❤️ by university students.
+        </p>
+      </div>
     </div>
+  </footer>
 
-    <div class="skills-list">
-        <h3>المهارات المختارة:</h3>
-        <ul>
-            {% for skill in selected_skills %}
-                <li>{{ skill }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div class="button-back">
-        <a href="http://localhost:8000/skills" class="back-button">العودة لاختيار المهارات</a>
-    </div>
-</div>
-
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Add some interactive feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate skill tags on load
+            const skillTags = document.querySelectorAll('.skill-tag');
+            skillTags.forEach((tag, index) => {
+                setTimeout(() => {
+                    tag.style.opacity = '0';
+                    tag.style.transform = 'translateY(20px)';
+                    tag.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        tag.style.opacity = '1';
+                        tag.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
