@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduDirect - AI-Powered Academic Guidance</title>
+  <meta name="description" content="Find your perfect academic path with our AI-powered guidance system for university majors, GPA prediction, and career advice.">
+  <meta name="keywords" content="academic guidance, university majors, GPA prediction, career advice, AI-powered education">
+  <meta name="author" content="EduDirect Team">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:title" content="EduDirect - AI-Powered Academic Guidance">
+  <meta property="og:description" content="Find your perfect academic path with our AI-powered guidance system for university majors, GPA prediction, and career advice.">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="EduDirect - AI-Powered Academic Guidance">
+  <meta property="twitter:description" content="Find your perfect academic path with our AI-powered guidance system for university majors, GPA prediction, and career advice.">
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6c63ff',
+            'primary-dark': '#564fd8',
+            accent: '#ff6584'
+          },
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="static/css/main.css">
+</head>
+
+<body class="antialiased font-poppins">
+  <!-- Navigation -->
+  <nav class="fixed w-full bg-white shadow-md z-50 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <div class="flex items-center">
+          <a href="http://127.0.0.1:8000" class="flex items-center">
+            <span class="text-2xl font-bold text-gray-800">Edu<span class="text-primary">Direct</span></span>
+          </a>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="http://127.0.0.1:8000" class="nav-link text-gray-700 hover:text-primary transition">Home</a>
+          <a href="#about" class="nav-link text-gray-700 hover:text-primary transition">About</a>
+          <a href="http://127.0.0.1:8000/services" class="nav-link text-gray-700 hover:text-primary transition">Services</a>
+          </a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+          <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">Home</a>
+          <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">About</a>
+          <a href="#services" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">Services</a>
+          <a href="http://127.0.0.1:8000/signinup" class="block mx-3 mt-3 bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition text-center">
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Section -->
+  <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-32 hero-gradient text-white min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-2xl mx-auto bg-white rounded-xl shadow-xl p-8 md:p-12 text-gray-800">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2 text-center text-primary">College Major Recommender</h1>
+      <p class="text-lg text-gray-600 mb-6 text-center">Get personalized recommendations for your university major based on your interests, skills, and goals.</p>
+      <form id="majorForm" onsubmit="event.preventDefault(); submitForm();" class="space-y-4">
+        <div>
+          <label for="subjects" class="form-label font-semibold">Favorite subjects:</label>
+          <textarea id="subjects" name="subjects" class="form-input" placeholder="E.g., Math, Physics, Literature" required></textarea>
+        </div>
+        <div>
+          <label for="hobbies" class="form-label font-semibold">Hobbies and interests:</label>
+          <textarea id="hobbies" name="hobbies" class="form-input" placeholder="E.g., Reading, coding, sports" required></textarea>
+        </div>
+        <div>
+          <label for="skills" class="form-label font-semibold">Strengths or skills:</label>
+          <textarea id="skills" name="skills" class="form-input" placeholder="E.g., Problem-solving, creativity" required></textarea>
+        </div>
+        <div>
+          <label for="goals" class="form-label font-semibold">Career goals:</label>
+          <textarea id="goals" name="goals" class="form-input" placeholder="E.g., Become an engineer or researcher" required></textarea>
+        </div>
+        <div>
+          <label for="traits" class="form-label font-semibold">Personality traits:</label>
+          <textarea id="traits" name="traits" class="form-input" placeholder="E.g., Detail-oriented, empathetic" required></textarea>
+        </div>
+        <div>
+          <label for="notes" class="form-label font-semibold">Additional notes (optional):</label>
+          <textarea id="notes" name="notes" class="form-input" placeholder="Any extra info..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-full mt-4">Get Recommendations</button>
+      </form>
+      <div id="output" class="result-container mt-8 hidden"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
+          <p class="text-gray-400 mb-4">AI-powered academic guidance to help students find their perfect path.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="http://127.0.0.1:8000" class="text-gray-400 hover:text-white transition smooth-scroll">Home</a></li>
+            <li><a href="http://127.0.0.1:8000#about" class="text-gray-400 hover:text-white transition smooth-scroll">about</a></li>
+            <li><a href="http://127.0.0.1:8000/services" class="text-gray-400 hover:text-white transition smooth-scroll">Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li><a href="http://127.0.0.1:8000/recommend" class="text-gray-400 hover:text-white transition">Major Recommendation</a></li>
+            <li><a href="http://127.0.0.1:8000/gpa" class="text-gray-400 hover:text-white transition">GPA Prediction</a></li>
+            <li><a href="http://127.0.0.1:8000/skills" class="text-gray-400 hover:text-white transition">Career Advice</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center">
+        <p class="text-gray-400">© 2024 EduDirect. All rights reserved. Built with ❤️ by university students.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button id="scroll-top" class="scroll-top fixed bottom-8 right-8 bg-primary hover:bg-primary-dark text-white p-3 rounded-full shadow-lg hidden transition-all duration-300 z-40">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').onclick = function() {
+      var menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    };
+
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scroll-top');
+    window.onscroll = function() {
+      if (window.scrollY > 300) {
+        scrollBtn.classList.remove('hidden');
+      } else {
+        scrollBtn.classList.add('hidden');
+      }
+    };
+    scrollBtn.onclick = function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Major recommender logic
+    function parseMajors(text) {
+      const regex = /\d+\.\s*Major:\s*(.+?)\n\s*Reason:\s*([\s\S]+?)(?=\n\d+\.|$)/g;
+      let matches, results = [];
+      while ((matches = regex.exec(text)) !== null) {
+        results.push({
+          name: matches[1].trim(),
+          reason: matches[2].trim()
+        });
+      }
+      return results;
+    }
+    function renderMajors(majors) {
+      if (majors.length === 0) return "<p>No majors found in the response.</p>";
+      return majors.map(m => `
+        <div class="major-block mb-6">
+          <div class="major-title font-bold text-primary text-lg mb-1">${m.name}</div>
+          <div class="major-reason text-gray-700 italic">${m.reason}</div>
+        </div>
+      `).join("");
+    }
+    async function submitForm() {
+      const outputDiv = document.getElementById("output");
+      outputDiv.classList.remove("hidden");
+      outputDiv.innerHTML = "Thinking...";
+      const formData = {
+        subjects: document.getElementById("subjects").value.trim(),
+        hobbies: document.getElementById("hobbies").value.trim(),
+        skills: document.getElementById("skills").value.trim(),
+        goals: document.getElementById("goals").value.trim(),
+        traits: document.getElementById("traits").value.trim(),
+        notes: document.getElementById("notes").value.trim(),
+      };
+      try {
+        const res = await fetch("http://127.0.0.1:8000/recommend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        if (!res.ok) {
+          outputDiv.innerHTML = `<p class="text-red-600 font-semibold">Error: ${res.statusText}</p>`;
+          return;
+        }
+        const data = await res.json();
+        if (data.response) {
+          const majors = parseMajors(data.response);
+          outputDiv.innerHTML = renderMajors(majors);
+        } else {
+          outputDiv.innerHTML = `<pre>${data.response || "No response from server."}</pre>`;
+        }
+      } catch (e) {
+        outputDiv.innerHTML = `<p class="text-red-600 font-semibold">Failed to contact API.</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
