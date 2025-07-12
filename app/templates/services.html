@@ -1,76 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Services</title>
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-
-  <!-- Main CSS File -->
-  <link href="static/css/main1.css" rel="stylesheet" />
-  <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-</head>
-
-<body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services - EduDirect</title>
+  <meta name="description" content="Explore EduDirect's comprehensive academic services including major recommendations, GPA prediction, and personalized career advice.">
+  <meta name="keywords" content="academic services, university major, GPA prediction, career advice, educational guidance">
+  
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6c63ff',
+            'primary-dark': '#564fd8',
+            accent: '#ff6584'
+          },
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+  
   <style>
     body {
-      background: url('static/img/aa.jpg') no-repeat center center fixed;
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(255, 101, 132, 0.1) 100%),
+                  url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
       background-size: cover;
+      min-height: 100vh;
+    }
+    
+    .service-card {
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px -12px rgba(108, 99, 255, 0.25);
+    }
+    
+    .icon-wrapper {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     }
   </style>
+</head>
 
-  <!-- Services Section -->
-  <section id="services" class="services section">
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Services</h2>
-      <p>Check our Services</p>
-    </div>
-
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-item position-relative">
-            <div class="icon">
-              <i class="bi bi-activity"></i>
-            </div>
-            <a href="kk.html" class="stretched-link">
-              <h3>Find your Major</h3>
-            </a>
-            <p>Find the best-fit university for your goals!</p>
-          </div>
+<body class="antialiased font-poppins">
+  <!-- Navigation -->
+  <nav class="fixed w-full bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-md z-50 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <div class="flex items-center">
+          <a href="http://127.0.0.1:8000" class="flex items-center">
+            <span class="text-2xl font-bold text-gray-800">Edu<span class="text-primary">Direct</span></span>
+          </a>
         </div>
-
-        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-item position-relative">
-            <div class="icon">
-              <i class="bi bi-broadcast"></i>
-            </div>
-            <a href="http://localhost:8000/gpa" class="stretched-link">
-              <h3>Predict Your GPA</h3>
-            </a>
-            <p>Track your progress and stay ahead!</p>
-          </div>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="http://127.0.0.1:8000" class="nav-link text-gray-700 hover:text-primary transition">Home</a>
+          <a href="http://127.0.0.1:8000#about" class="nav-link text-gray-700 hover:text-primary transition">About</a>
         </div>
-
-        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-          <div class="service-item position-relative">
-            <div class="icon">
-              <i class="bi bi-broadcast"></i>
-            </div>
-            <a href="http://localhost:8000/skills" class="stretched-link">
-              <h3>Career Advice</h3>
-            </a>
-            <p>Clear guidance for your next big move.</p>
-          </div>
+        
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg border-t">
+          <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">Home</a>
+          <a href="index.html#about" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">About</a>
+          <a href="#services" class="block px-3 py-2 text-primary font-semibold mobile-nav-link">Services</a>
+          <a href="index.html#contact" class="block px-3 py-2 text-gray-700 hover:text-primary transition mobile-nav-link">Contact</a>
+          <a href="signin-signup.html" class="block mx-3 mt-3 bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition text-center">
+            Sign Up
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- Main Content -->
+  <main class="pt-32 pb-20">
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+            Our <span class="text-accent">Services</span>
+          </h1>
+          <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-xl text-white opacity-90 max-w-3xl mx-auto">
+            Comprehensive solutions to guide your academic and professional journey with AI-powered insights
+          </p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Service 1: Find Your Major -->
+          <article class="service-card bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:border-primary border border-transparent">
+            <div class="p-8 text-center">
+              <div class="icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-university text-white text-3xl"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Find Your Major</h3>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                Find the best-fit university major for your goals! Our AI analyzes your interests, skills, and academic strengths to recommend the perfect program.
+              </p>
+              <a href="kk.html" class="inline-flex items-center bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg">
+                Get Started
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Service 2: Predict Your GPA -->
+          <article class="service-card bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:border-primary border border-transparent">
+            <div class="p-8 text-center">
+              <div class="icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-chart-line text-white text-3xl"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Predict Your GPA</h3>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                Track your progress and stay ahead! Our advanced algorithm predicts your GPA based on your study habits and daily activities.
+              </p>
+              <a href="http://localhost:8000/gpa" class="inline-flex items-center bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg">
+                Try Now
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Service 3: Career Advice -->
+          <article class="service-card bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:border-primary border border-transparent">
+            <div class="p-8 text-center">
+              <div class="icon-wrapper w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-briefcase text-white text-3xl"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Career Advice</h3>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                Clear guidance for your next big move! Get personalized career recommendations based on your skills, interests, and market trends.
+              </p>
+              <a href="http://localhost:8000/skills" class="inline-flex items-center bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg">
+                Explore Careers
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Additional Features Section -->
+        <div class="mt-20">
+          <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Why Choose EduDirect?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center">
+                <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-robot text-white text-2xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">AI-Powered</h4>
+                <p class="text-gray-600 text-sm">Advanced algorithms provide accurate predictions and recommendations</p>
+              </div>
+              
+              <div class="text-center">
+                <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-user-check text-white text-2xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Personalized</h4>
+                <p class="text-gray-600 text-sm">Tailored recommendations based on your unique profile and goals</p>
+              </div>
+              
+              <div class="text-center">
+                <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-clock text-white text-2xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Real-time</h4>
+                <p class="text-gray-600 text-sm">Get instant results and insights to make informed decisions</p>
+              </div>
+              
+              <div class="text-center">
+                <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Reliable</h4>
+                <p class="text-gray-600 text-sm">Trusted by thousands of students for accurate academic guidance</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        
+      </div>
+    </section>
+  </main>
+   <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <!-- Company Info -->
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
+          <p class="text-gray-400 mb-4">
+            AI-powered academic guidance to help students find their perfect path.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="http://127.0.0.1:8000" class="text-gray-400 hover:text-white transition smooth-scroll">Home</a></li>
+            <li><a href="http://127.0.0.1:8000#about" class="text-gray-400 hover:text-white transition smooth-scroll">About</a></li>
+          </ul>
+        </div>
+        
+        <!-- Services -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li><a href="http://127.0.0.1:8000/recommend" class="text-gray-400 hover:text-white transition">Major Recommendation</a></li>
+            <li><a href="http://127.0.0.1:8000/gpa" class="text-gray-400 hover:text-white transition">GPA Prediction</a></li>
+            <li><a href="http://127.0.0.1:8000/skills" class="text-gray-400 hover:text-white transition">Career Advice</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="border-t border-gray-800 pt-8 text-center">
+        <p class="text-gray-400">
+          © 2024 EduDirect. All rights reserved. Built with ❤️ by university students.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button id="scroll-top" class="fixed bottom-6 right-6 bg-primary hover:bg-primary-dark text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hidden">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Loading Animation (if needed) -->
+  <div id="preloader" class="fixed inset-0 bg-white flex items-center justify-center z-50 hidden">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+      <p class="text-gray-600 font-medium">Loading services...</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+  <script>
+    // Hide preloader when page loads
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.classList.add('hidden');
+      }
+    });
+
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>
