@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | EduDirect - AI-Powered Academic Guidance</title>
+    <meta name="description" content="Sign in to your EduDirect account to access personalized academic guidance and career recommendations.">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1282a2',
+                        'primary-dark': '#564f001f54d8',
+                        accent: '#a9def9'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="static\css\signinup.css">
+</head>
+
+<body>
+    <!-- Back to Home Link -->
+    <div class="back-home">
+        <a href="/">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span class="text-2xl font-bold">Edu<span class="text-primary">Direct</span></span>
+        </a>
+    </div>
+
+    <div class="container" id="container">
+        <!-- SIGN UP FORM -->
+        <div class="form-container sign-up">
+            <form action="/auth" method="POST">
+                <h1>Create Account</h1>
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit" name="signup" value="1">Sign Up</button>
+                
+                <!-- Mobile Toggle -->
+                <div class="mobile-toggle">
+                    <p style="color: #666; margin: 10px 0;">Already have an account?</p>
+                    <button type="button" id="mobile-login">Sign In</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <div class="form-container sign-in">
+            <form action="/auth" method="POST">
+                <h1>Sign In</h1>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit" name="signin" value="1">Sign In</button>
+                
+                <!-- Mobile Toggle -->
+                <div class="mobile-toggle">
+                    <p style="color: #666; margin: 10px 0;">Don't have an account?</p>
+                    <button type="button" id="mobile-register">Sign Up</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- TOGGLE PANELS -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p style="word-break: break-all;">Enter your personal details to access all of EduDirect's features and continue your academic journey</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                
+                    <p style="text-align:right">Register with your personal details to unlock all of EduDirect's AI-powered academic guidance features</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your original JavaScript - keeping it exactly as provided
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+
+        // Additional mobile support
+        const mobileRegisterBtn = document.getElementById('mobile-register');
+        const mobileLoginBtn = document.getElementById('mobile-login');
+
+        if (mobileRegisterBtn) {
+            mobileRegisterBtn.addEventListener('click', () => {
+                container.classList.add("active");
+            });
+        }
+
+        if (mobileLoginBtn) {
+            mobileLoginBtn.addEventListener('click', () => {
+                container.classList.remove("active");
+            });
+        }
+    </script>
+    <script src="signinup.js"></script>
+</body>
+</html>
