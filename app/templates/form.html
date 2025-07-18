@@ -1,393 +1,76 @@
-        <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Skill-Based Major Recommendation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Tailwind CSS CDN for navbar/footer -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <title>AI Career Recommender</title>
   <style>
-    :root {
-      --primary: #1282a2;
-      --primary-dark: #001f54;
-      --accent: #1282a2;
-      --gray-50: #f8f9fa;
-      --gray-100: #f1f3f4;
-      --gray-200: #e8eaed;
-      --gray-300: #dadce0;
-      --gray-600: #5f6368;
-      --gray-800: #202124;
-    }
-
-    /* Background with gradient + image */
     body {
-      background: linear-gradient(
-          135deg,
-          rgba(108, 99, 255, 0.1) 0%,
-          rgba(255, 101, 132, 0.1) 100%
-        ),
-        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')
-          no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      color: var(--gray-800);
-      box-sizing: border-box;
-      direction: ltr;
-    }
-    
-
-    .text-primary {
-      color: var(--primary);
     }
 
-    /* Adjust padding for fixed navbar */
-    main.content-wrapper {
-      padding-top: 130px; /* navbar height + some spacing */
-      padding-bottom: 50px; /* space for footer */
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: calc(100vh - 240px);
+    .container {
+      width: 500px; /* تعديل الحجم ليطابق gpa */
+      margin: 80px auto; /* توسيط الصفحة */
+      padding: 30px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
     }
 
-    .form-container {
-      background: white;
-      padding: 35px 35px 25px 35px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15);
-      width: 90%;
-      max-width: 450px;
+    h2 {
       text-align: center;
-      border: 1px solid var(--gray-200);
-    }
-
-    h1 {
-      margin-bottom: 15px;
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 26px;
-    }
-
-    p.description {
+      color: #333;
       margin-bottom: 25px;
-      color: var(--gray-600);
-      font-size: 17px;
     }
 
-    .search-box {
-      margin-bottom: 20px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 2px solid var(--gray-200);
-      font-size: 16px;
-      background-color: white;
-      color: var(--gray-800);
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-    }
-
-    .search-box input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
-    }
-
-    .checkbox-group {
-      text-align: left;
-      max-height: 220px;
-      overflow-y: auto;
-      margin-bottom: 25px;
-      padding-left: 12px;
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      background-color: var(--gray-50);
-    }
-
-    .checkbox-item {
-      margin-bottom: 12px;
-      font-size: 16px;
-      padding: 8px 12px;
-      transition: background-color 0.3s ease;
-    }
-
-    .checkbox-item:hover {
-      background-color: rgba(108, 99, 255, 0.05);
-    }
-
-    .checkbox-item label {
-      cursor: pointer;
+    form {
       display: flex;
-      align-items: center;
-      color: var(--gray-800);
+      flex-direction: column;
     }
 
-    .checkbox-item input {
-      margin-right: 14px;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-      accent-color: var(--primary);
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
-    button, .toggle-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    select {
+      height: 200px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #007BFF;
       color: white;
+      font-size: 16px;
       border: none;
-      padding: 14px 0;
-      border-radius: 30px;
+      border-radius: 5px;
       cursor: pointer;
-      font-size: 19px;
-      width: 100%;
-      max-width: 380px;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
     }
 
-    button:hover, .toggle-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
-    }
-
-    .toggle-btn {
-      background: linear-gradient(135deg, var(--accent) 0%, #e55a7b 100%);
-      box-shadow: 0 4px 15px rgba(255, 101, 132, 0.3);
-    }
-
-    .toggle-btn:hover {
-      box-shadow: 0 6px 20px rgba(255, 101, 132, 0.4);
-    }
-
-    .button-row {
-      margin-top: 12px;
-    }
-
-    .checkbox-group::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .checkbox-group::-webkit-scrollbar-track {
-      background: var(--gray-100);
-      border-radius: 3px;
-    }
-
-    .checkbox-group::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 3px;
-    }
-
-    .checkbox-group::-webkit-scrollbar-thumb:hover {
-      background: var(--primary-dark);
-    }
-
-    @media (max-width: 480px) {
-      .form-container {
-        padding: 30px 25px 20px 25px;
-        max-width: 100%;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      p.description {
-        font-size: 15px;
-      }
-
-      .checkbox-group {
-        max-height: 180px;
-        margin-bottom: 20px;
-      }
-
-      .checkbox-item {
-        font-size: 14px;
-        margin-bottom: 10px;
-      }
-
-      .checkbox-item input {
-        width: 16px;
-        height: 16px;
-        margin-right: 12px;
-      }
-
-      button, .toggle-btn {
-        max-width: 100%;
-        font-size: 17px;
-        padding: 13px 0;
-      }
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-
-  <!-- Navbar -->
-  <nav
-    class="fixed w-full bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-md z-50 transition-all duration-300"
-    id="navbar"
-  >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-20 items-center">
-        <div class="flex items-center">
-          <a href="index.html" class="flex items-center">
-            <span class="text-2xl font-bold text-gray-800">
-              Edu<span class="text-primary">Direct</span>
-            </span>
-          </a>
-        </div>
-
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="/" class="nav-link text-gray-700 hover:text-primary transition"
-            >Home</a
-          >
-          <a
-            href="/#about"
-            class="nav-link text-gray-700 hover:text-primary transition"
-            >About</a
-          >
-          <a href="/services" class="nav-link text-gray-700 hover:text-primary transition"
-            >Services</a
-          >
-        </div>
-
-        <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
-          <i class="fas fa-bars text-2xl" id="menu-icon"></i>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main content -->
-  <main class="content-wrapper">
-    <div class="form-container">
-      <h1><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>Select Your Skills</h1>
-      <p class="description">Choose the skills you are good at. You can use the search to filter:</p>
-
-      <div class="search-box">
-        <input type="text" id="skill-search" placeholder="Search for a skill..." />
-      </div>
-
-      <form method="post" action="/skills/predict">
-        <div class="checkbox-group" id="skills-container">
-          {% for skill in skills %}
-            <div class="checkbox-item">
-              <label>
-                <input type="checkbox" name="selected_skills" value="{{ skill }}" class="skill-checkbox" />
-                {{ skill }}
-              </label>
-            </div>
-          {% endfor %}
-        </div>
-
-
-        <button type="submit"class="toggle-btn" style ="background: #1282a2">
-          <i class="fas fa-magic" style="margin-right: 8px;"></i>Recommend a Major
-        </button>
-
-        <div class="button-row">
-          <button type="button" class="toggle-btn"style ="background: #1d3557" onclick="unselectAll()">
-            <i class="fas fa-times" style="margin-right: 8px;"></i>Clear Selection
-          </button>
-        </div>
-      </form>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white pt-16 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-        <!-- Company Info -->
-        <div>
-          <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
-          <p class="text-gray-400 mb-4">
-            AI-powered academic guidance to help students find their perfect path.
-          </p>
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div>
-          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-          <ul class="space-y-2">
-            <li><a href="/" class="text-gray-400 hover:text-white transition smooth-scroll">Home</a></li>
-            <li><a href="/#about" class="text-gray-400 hover:text-white transition smooth-scroll">About</a></li>
-            <li><a href="/services" class="text-gray-400 hover:text-white transition smooth-scroll">Services</a></li>
-          </ul>
-        </div>
-
-        <!-- Services -->
-        <div>
-          <h4 class="text-lg font-semibold mb-4">Services</h4>
-          <ul class="space-y-2">
-            <li><a href="/recommend" class="text-gray-400 hover:text-white transition">Major Recommendation</a></li>
-            <li><a href="/gpa" class="text-gray-400 hover:text-white transition">GPA Prediction</a></li>
-            <li><a href="/skills" class="text-gray-400 hover:text-white transition">Career Advice</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Copyright -->
-      <div class="border-t border-gray-800 pt-8 text-center">
-        <p class="text-gray-400">
-          © 2024 EduDirect. All rights reserved. Built with ❤️ by university students.
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    function unselectAll() {
-      document.querySelectorAll('.skill-checkbox').forEach(cb => cb.checked = false);
-    }
-
-    document.getElementById("skill-search").addEventListener("input", function () {
-      const searchTerm = this.value.toLowerCase();
-      const items = document.querySelectorAll(".checkbox-item");
-
-      items.forEach(item => {
-        const label = item.textContent.toLowerCase();
-        item.style.display = label.includes(searchTerm) ? "" : "none";
-      });
-    });
-
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-button');
-    const menuIcon = document.getElementById('menu-icon');
-
-    mobileMenuBtn.addEventListener('click', () => {
-      const navLinks = document.querySelector('nav .md\\:flex');
-      if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-        menuIcon.classList.remove('fa-xmark');
-        menuIcon.classList.add('fa-bars');
-      } else {
-        navLinks.style.display = 'flex';
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-xmark');
-      }
-    });
-  </script>
+  <div class="container">
+    <h2>AI Career Recommender</h2>
+    <form method="post" action="/predict_career">
+      <label for="skills">Select your skills:</label>
+      <select id="skills" name="skills" multiple>
+        {% for skill in skills %}
+          <option value="{{ skill }}">{{ skill }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Get Career Recommendation</button>
+    </form>
+  </div>
 </body>
 </html>
