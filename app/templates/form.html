@@ -1,75 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Career Recommender</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Your Skills | EduDirect</title>
 
-    .container {
-      width: 500px; /* تعديل الحجم ليطابق gpa */
-      margin: 80px auto; /* توسيط الصفحة */
-      padding: 30px;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      border-radius: 10px;
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#457b9d',
+            'primary-dark': '#1d3557',
+            accent: '#a9def9'
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif']
+          }
+        }
+      }
     }
+  </script>
 
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 25px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    select {
-      height: 200px;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px;
-      background-color: #007BFF;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <div class="container">
-    <h2>AI Career Recommender</h2>
-    <form method="post" action="/predict_career">
-      <label for="skills">Select your skills:</label>
-      <select id="skills" name="skills" multiple>
-        {% for skill in skills %}
-          <option value="{{ skill }}">{{ skill }}</option>
-        {% endfor %}
-      </select>
-      <button type="submit">Get Career Recommendation</button>
+
+<body class="font-poppins bg-gray-50 min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-xl bg-white rounded-xl shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-center text-primary mb-6">AI Career Recommender</h2>
+
+    <form method="POST" action="/predict_career" class="space-y-6">
+      <div>
+        <label for="skills" class="block text-gray-700 font-medium mb-2">Select your skills:</label>
+        <select id="skills" name="skills" multiple class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 h-56 focus:outline-none focus:ring-2 focus:ring-primary">
+          {% for skill in skills %}
+            <option value="{{ skill }}">{{ skill }}</option>
+          {% endfor %}
+        </select>
+        <p class="text-sm text-gray-500 mt-1">Hold Ctrl or Cmd to select multiple skills.</p>
+      </div>
+
+      <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-lg transition">
+        Get Career Recommendation
+      </button>
     </form>
   </div>
 </body>
