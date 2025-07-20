@@ -21,9 +21,13 @@
     }
 
     body {
-      background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(255, 101, 132, 0.1) 100%),
-                  url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')
-                  no-repeat center center fixed;
+      background: linear-gradient(
+          135deg,
+          rgba(108, 99, 255, 0.1) 0%,
+          rgba(255, 101, 132, 0.1) 100%
+        ),
+        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')
+          no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       margin: 0;
@@ -53,7 +57,7 @@
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15);
       width: 90%;
-      max-width: 450px;
+      max-width: 500px;
       text-align: center;
       border: 1px solid var(--gray-200);
     }
@@ -69,6 +73,10 @@
       margin-bottom: 25px;
       color: var(--gray-600);
       font-size: 17px;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
     }
 
     .search-box input {
@@ -98,6 +106,17 @@
       border: 1px solid var(--gray-200);
       border-radius: 10px;
       background-color: var(--gray-50);
+    }
+
+    .checkbox-item {
+      margin-bottom: 12px;
+      font-size: 16px;
+      padding: 8px 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkbox-item:hover {
+      background-color: rgba(108, 99, 255, 0.05);
     }
 
     .checkbox-item label {
@@ -144,8 +163,17 @@
       box-shadow: 0 6px 20px rgba(255, 101, 132, 0.4);
     }
 
+    .button-row {
+      margin-top: 12px;
+    }
+
     .checkbox-group::-webkit-scrollbar {
       width: 6px;
+    }
+
+    .checkbox-group::-webkit-scrollbar-track {
+      background: var(--gray-100);
+      border-radius: 3px;
     }
 
     .checkbox-group::-webkit-scrollbar-thumb {
@@ -153,10 +181,14 @@
       border-radius: 3px;
     }
 
-    @media (max-width: 480px) {
+    .checkbox-group::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+
+    @media (max-width: 768px) {
       .form-container {
         padding: 30px 25px 20px 25px;
-        max-width: 100%;
+        max-width: 95%;
       }
 
       h1 {
@@ -167,165 +199,141 @@
         font-size: 15px;
       }
 
+      .checkbox-group {
+        max-height: 180px;
+        margin-bottom: 20px;
+      }
+
+      .checkbox-item {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .checkbox-item input {
+        width: 16px;
+        height: 16px;
+        margin-right: 12px;
+      }
+
       button, .toggle-btn {
         max-width: 100%;
         font-size: 17px;
         padding: 13px 0;
       }
     }
-
-    @media (max-width: 768px) {
-      footer {
-        text-align: center;
-      }
-
-      footer .grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-      }
-
-      footer .space-x-4 {
-        justify-content: center;
-      }
-    }
   </style>
 </head>
 <body>
 
-<!-- Mobile Menu Overlay -->
-<div id="mobile-nav-overlay" class="fixed inset-0 bg-white bg-opacity-95 z-40 hidden flex-col items-center justify-center space-y-8 text-lg font-semibold text-gray-800 transition-all duration-300">
-  <a href="/" class="hover:text-primary transition">Home</a>
-  <a href="/#about" class="hover:text-primary transition">About</a>
-  <a href="/services" class="hover:text-primary transition">Services</a>
-  <button id="close-mobile-nav" class="mt-8 toggle-btn w-40">Close</button>
-</div>
-
-<!-- Navbar -->
-<nav class="fixed w-full bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-md z-50 transition-all duration-300" id="navbar">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-20 items-center">
-      <div class="flex items-center">
-        <a href="index.html" class="flex items-center">
-          <span class="text-2xl font-bold text-gray-800">Edu<span class="text-primary">Direct</span></span>
-        </a>
-      </div>
-
-      <div class="hidden md:flex items-center space-x-8">
-        <a href="/" class="nav-link text-gray-700 hover:text-primary transition">Home</a>
-        <a href="/#about" class="nav-link text-gray-700 hover:text-primary transition">About</a>
-        <a href="/services" class="nav-link text-gray-700 hover:text-primary transition">Services</a>
-      </div>
-
-      <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
-        <i class="fas fa-bars text-2xl" id="menu-icon"></i>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- Main Content -->
-<main class="content-wrapper">
-  <div class="form-container">
-    <h1><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>Select Your Skills</h1>
-    <p class="description">Choose the skills you are good at. You can use the search to filter:</p>
-
-    <div class="search-box">
-      <input type="text" id="skill-search" placeholder="Search for a skill..." />
-    </div>
-
-    <form method="post" action="/skills/predict">
-      <div class="checkbox-group" id="skills-container">
-        {% for skill in skills %}
-        <div class="checkbox-item">
-          <label>
-            <input type="checkbox" name="selected_skills" value="{{ skill }}" class="skill-checkbox" />
-            {{ skill }}
-          </label>
+  <!-- Navbar -->
+  <nav class="fixed w-full bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-md z-50 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center">
+            <span class="text-2xl font-bold text-gray-800">Edu<span class="text-primary">Direct</span></span>
+          </a>
         </div>
-        {% endfor %}
-      </div>
-
-      <button type="submit" class="toggle-btn" style="background: #1282a2">
-        <i class="fas fa-magic" style="margin-right: 8px;"></i>Recommend a Major
-      </button>
-
-      <div class="button-row">
-        <button type="button" class="toggle-btn" style="background: #1d3557" onclick="unselectAll()">
-          <i class="fas fa-times" style="margin-right: 8px;"></i>Clear Selection
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link text-gray-700 hover:text-primary transition">Home</a>
+          <a href="/#about" class="nav-link text-gray-700 hover:text-primary transition">About</a>
+          <a href="/services" class="nav-link text-gray-700 hover:text-primary transition">Services</a>
+        </div>
+        <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl" id="menu-icon"></i>
         </button>
       </div>
-    </form>
-  </div>
-</main>
+    </div>
+  </nav>
 
-<!-- Footer -->
-<footer class="bg-gray-900 text-white pt-16 pb-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-      <div>
-        <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
-        <p class="text-gray-400 mb-4">AI-powered academic guidance to help students find their perfect path.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    <div class="form-container">
+      <h1><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>Select Your Skills</h1>
+      <p class="description">Choose the skills you are good at. You can use the search to filter:</p>
+
+      <div class="search-box">
+        <input type="text" id="skill-search" placeholder="Search for a skill..." />
+      </div>
+
+      <form method="post" action="/skills/predict">
+        <div class="checkbox-group" id="skills-container">
+          {% for skill in skills %}
+            <div class="checkbox-item">
+              <label>
+                <input type="checkbox" name="selected_skills" value="{{ skill }}" class="skill-checkbox" />
+                {{ skill }}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="toggle-btn" style="background: #1282a2">
+          <i class="fas fa-magic" style="margin-right: 8px;"></i>Recommend a Major
+        </button>
+
+        <div class="button-row">
+          <button type="button" class="toggle-btn" style="background: #1d3557" onclick="unselectAll()">
+            <i class="fas fa-times" style="margin-right: 8px;"></i>Clear Selection
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Edu<span class="text-primary">Direct</span></h3>
+          <p class="text-gray-400 mb-4">
+            AI-powered academic guidance to help students find their perfect path.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
         </div>
       </div>
-
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-        <ul class="space-y-2">
-          <li><a href="/" class="text-gray-400 hover:text-white transition smooth-scroll">Home</a></li>
-          <li><a href="/#about" class="text-gray-400 hover:text-white transition smooth-scroll">About</a></li>
-          <li><a href="/services" class="text-gray-400 hover:text-white transition smooth-scroll">Services</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Services</h4>
-        <ul class="space-y-2">
-          <li><a href="/recommend" class="text-gray-400 hover:text-white transition">Major Recommendation</a></li>
-          <li><a href="/gpa" class="text-gray-400 hover:text-white transition">GPA Prediction</a></li>
-          <li><a href="/skills" class="text-gray-400 hover:text-white transition">Career Advice</a></li>
-        </ul>
+      <div class="border-t border-gray-800 pt-8 text-center">
+        <p class="text-gray-400">© 2024 EduDirect. All rights reserved. Built with ❤ by university students.</p>
       </div>
     </div>
+  </footer>
 
-    <div class="border-t border-gray-800 pt-8 text-center">
-      <p class="text-gray-400">© 2024 EduDirect. All rights reserved. Built with ❤️ by university students.</p>
-    </div>
-  </div>
-</footer>
+  <script>
+    function unselectAll() {
+      document.querySelectorAll('.skill-checkbox').forEach(cb => cb.checked = false);
+    }
 
-<!-- Scripts -->
-<script>
-  function unselectAll() {
-    document.querySelectorAll('.skill-checkbox').forEach(cb => cb.checked = false);
-  }
+    document.getElementById("skill-search").addEventListener("input", function () {
+      const searchTerm = this.value.toLowerCase();
+      const items = document.querySelectorAll(".checkbox-item");
 
-  document.getElementById("skill-search").addEventListener("input", function () {
-    const searchTerm = this.value.toLowerCase();
-    const items = document.querySelectorAll(".checkbox-item");
-    items.forEach(item => {
-      const label = item.textContent.toLowerCase();
-      item.style.display = label.includes(searchTerm) ? "" : "none";
+      items.forEach(item => {
+        const label = item.textContent.toLowerCase();
+        item.style.display = label.includes(searchTerm) ? "" : "none";
+      });
     });
-  });
 
-  const mobileMenuBtn = document.getElementById('mobile-menu-button');
-  const menuIcon = document.getElementById('menu-icon');
-  const mobileOverlay = document.getElementById('mobile-nav-overlay');
-  const closeBtn = document.getElementById('close-mobile-nav');
+    const mobileMenuBtn = document.getElementById('mobile-menu-button');
+    const menuIcon = document.getElementById('menu-icon');
 
-  mobileMenuBtn.addEventListener('click', () => {
-    mobileOverlay.classList.toggle('hidden');
-  });
-
-  closeBtn.addEventListener('click', () => {
-    mobileOverlay.classList.add('hidden');
-  });
-</script>
-
+    mobileMenuBtn.addEventListener('click', () => {
+      const navLinks = document.querySelector('nav .md\\:flex');
+      if (navLinks.style.display === 'flex') {
+        navLinks.style.display = 'none';
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      } else {
+        navLinks.style.display = 'flex';
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+      }
+    });
+  </script>
 </body>
 </html>
